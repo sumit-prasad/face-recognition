@@ -48,7 +48,7 @@ def register_user_with_gui():
         user_folder = os.path.join(IMAGES_FOLDER, user_name)
         os.makedirs(user_folder, exist_ok=True)
         
-        print("Press 'q' to capture an image. Press 'esc' to finish.")
+        print("Press 'q' to capture an image. Press 'e' to finish.")
         
         cap = cv2.VideoCapture(0)
         count = 0
@@ -119,8 +119,21 @@ def recognize_user():
             matches = face_recognition.compare_faces(known_encodings, face_encoding, tolerance=THRESHOLD)
             name = "Unknown"  # Default to "Unknown" if no match found
 
-            if any(matches):
-                matched_index = matches.index(True)
+            new_matches = []
+            prev_element = None
+
+            for element in matches:
+                if element != prev_element:
+                    new_matches.append(element)
+                prev_element = element
+
+            if any(new_matches):
+                # print(f"Matches -> {matches}")
+                # print(f"New Matches -> {new_matches}")
+                # print(f"Known names -> {known_names}")
+                # print(f"Matched index -> {matched_index}")
+
+                matched_index = new_matches.index(True)
                 name = known_names[matched_index]
 
             # Draw a rectangle and label on the face
