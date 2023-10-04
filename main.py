@@ -1,7 +1,7 @@
 import tkinter as tk
 from user_registration import register_user_with_gui
 from user_recognition import recognize_user
-from database import reset_database
+from database import create_database, reset_database
 
 # Create a GUI for user interaction
 root = tk.Tk()
@@ -35,4 +35,5 @@ exit_button.config(width=button_size[0], height=button_size[1])
 
 # Start the GUI application
 if __name__ == "__main__":
+    create_database()
     root.mainloop()
