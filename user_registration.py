@@ -21,12 +21,14 @@ def register_user_with_gui():
             ret, frame = cap.read()
             cv2.imshow('Capture', frame)
             
+            # Press 'q' to capture image
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 image_path = os.path.join(user_folder, f'{count}.jpg')
                 cv2.imwrite(image_path, frame)
                 print(f"Image {count} captured.")
                 count += 1
-            elif cv2.waitKey(1) & 0xFF == ord('e'):  # Press 'esc' to finish
+            
+            elif cv2.waitKey(1) & 0xFF == ord('e'):  # Press 'e' to finish
                 break
         
         cap.release()

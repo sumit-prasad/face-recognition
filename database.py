@@ -1,7 +1,9 @@
 import sqlite3
 import pickle
+import os
+import shutil
 from tkinter import simpledialog, messagebox
-from constants import DATABASE_FILE, SECURITY_CODE
+from constants import IMAGES_FOLDER, DATABASE_FILE, SECURITY_CODE
 
 def create_database():
     conn = sqlite3.connect(DATABASE_FILE)
@@ -52,6 +54,13 @@ def reset_database():
             cursor.execute("DELETE FROM users")
             conn.commit()
             conn.close()
+
+            # Delete all user image folders
+            for user_folder in os.listdir(IMAGES_FOLDER):
+                user_folder_path = os.path.join(IMAGES_FOLDER, user_folder)
+                if os.path.isdir(user_folder_path):
+                    shutil.rmtree(user_folder_path)
+
             messagebox.showinfo("Database Reset", "Database reset completed.")
         else:
             messagebox.showinfo("Database Reset", "Database reset canceled.")
